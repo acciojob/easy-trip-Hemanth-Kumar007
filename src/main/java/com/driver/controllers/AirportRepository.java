@@ -30,6 +30,12 @@ public class AirportRepository {
                 max = airportDb.get(name).getNoOfTerminals();
                 largest = name;
             }
+            else if(airportDb.get(name).getNoOfTerminals() == max){
+                int comp = name.compareTo(largest);
+                if(comp < 0){
+                    largest = name;
+                }
+            }
         }
         return largest;
     }
@@ -47,7 +53,10 @@ public class AirportRepository {
                 }
             }
         }
-        return shortestDuration;
+        if(flag == false) return -1;
+
+        else return shortestDuration;
+
     }
 
     public int getNumberOfPeopleOn(Date date, String airportName){
@@ -57,7 +66,8 @@ public class AirportRepository {
             City to = flightDb.get(id).getToCity();
             Date fDate = flightDb.get(id).getFlightDate();
             if((fDate.equals(date) && from.equals(airportName)) || ((fDate.equals(date)) && to.equals(airportName))){
-                totalPersons += flightDb.get(id).getMaxCapacity();
+                //totalPersons += flightDb.get(id).getMaxCapacity();
+                totalPersons += bookingDb.get(id).size();
             }
         }
         return totalPersons;

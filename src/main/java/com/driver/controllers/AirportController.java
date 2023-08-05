@@ -21,7 +21,7 @@ public class AirportController {
     //@Autowired
     AirportService serviceObj = new AirportService();
 
-    @PostMapping("/add-airport")
+    @PostMapping("/add_airport")
     public String addAirport(@RequestBody Airport airport){
 
         //Simply add airport details to your database
@@ -31,10 +31,10 @@ public class AirportController {
         return "SUCCESS";
     }
 
-    @GetMapping("/testApi")
-    public String testApi(){
-        return "Test Successful";
-    }
+//    @GetMapping("/testApi")
+//    public String testApi(){
+//        return "Test Successful";
+//    }
 
     @GetMapping("/get-largest-aiport")
     public String getLargestAirportName(){
