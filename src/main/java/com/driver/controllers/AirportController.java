@@ -5,6 +5,7 @@ import com.driver.model.Airport;
 import com.driver.model.City;
 import com.driver.model.Flight;
 import com.driver.model.Passenger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,13 +17,23 @@ import java.util.Objects;
 
 @RestController
 public class AirportController {
+
+    //@Autowired
+    AirportService serviceObj = new AirportService();
+
     @PostMapping("/add_airport")
     public String addAirport(@RequestBody Airport airport){
 
         //Simply add airport details to your database
         //Return a String message "SUCCESS"
+        serviceObj.addAirport(airport);
 
         return "SUCCESS";
+    }
+
+    @GetMapping("/testApi")
+    public String testApi(){
+        return "Test Successful";
     }
 
     @GetMapping("/get-largest-aiport")
@@ -31,7 +42,7 @@ public class AirportController {
         //Largest airport is in terms of terminals. 3 terminal airport is larger than 2 terminal airport
         //Incase of a tie return the Lexicographically smallest airportName
 
-       return null;
+       return serviceObj.getLargestAirportName();
     }
 
     @GetMapping("/get-shortest-time-travel-between-cities")
@@ -40,7 +51,7 @@ public class AirportController {
         //Find the duration by finding the shortest flight that connects these 2 cities directly
         //If there is no direct flight between 2 cities return -1.
 
-       return 0;
+       return serviceObj.getShortestDurationOfPossibleBetweenTwoCities(fromCity, toCity);
     }
 
     @GetMapping("/get-number-of-people-on-airport-on/{date}")
@@ -49,7 +60,7 @@ public class AirportController {
         //Calculate the total number of people who have flights on that day on a particular airport
         //This includes both the people who have come for a flight and who have landed on an airport after their flight
 
-        return 0;
+        return serviceObj.getNumberOfPeopleOn(date, airportName);
     }
 
     @GetMapping("/calculate-fare")
