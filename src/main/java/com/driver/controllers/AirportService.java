@@ -54,6 +54,10 @@ public class AirportService {
         return repositoryObj.getAirportNameFromFlightId(flightId);
     }
 
+    public int calculateRevenueOfAFlight(Integer flightId){
+        return repositoryObj.calculateRevenueOfAFlight(flightId);
+    }
+
     public void addPassenger(Passenger passenger){
         repositoryObj.addPassenger(passenger);
     }

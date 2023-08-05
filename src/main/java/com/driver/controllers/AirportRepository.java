@@ -18,6 +18,7 @@ public class AirportRepository {
     HashMap<Integer, Flight> flightDb = new HashMap<>();
     HashMap<Integer, Passenger> passengerDb = new HashMap<>();
     HashMap<Integer, List<Integer>> bookingDb = new HashMap<>();
+    HashMap<Integer,Integer>canceltikets=new HashMap<>();
     public void addAirport(Airport airport){
         String name = airport.getAirportName();
         airportDb.put(name, airport);
@@ -127,6 +128,7 @@ public class AirportRepository {
         else{
             passengerList.remove(passengerId);
             bookingDb.put(flightId, passengerList);
+            canceltikets.put(flightId,canceltikets.getOrDefault(flightId,0)+1);
             return "SUCCESS";
         }
     }
@@ -159,6 +161,12 @@ public class AirportRepository {
             }
             return null;
         }
+    }
+
+    public int calculateRevenueOfAFlight(Integer flightId){
+        int cancelfare=canceltikets.getOrDefault(flightId,1)*50;
+
+        return calculateFlightFare(flightId)-cancelfare;
     }
 
     public void addPassenger(Passenger passenger){
