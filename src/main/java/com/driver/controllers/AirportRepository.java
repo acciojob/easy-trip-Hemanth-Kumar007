@@ -92,7 +92,7 @@ public class AirportRepository {
         //else if you are able to book a ticket then return "SUCCESS"
 
         Flight flight = flightDb.get(flightId);
-        if(bookingDb.get(flightId).size() > flight.getMaxCapacity()){
+        if(bookingDb.get(flightId).size() >= flight.getMaxCapacity()){
             return "FAILURE";
         }
         else if(bookingDb.get(flightId).contains(passengerId)){
@@ -137,6 +137,17 @@ public class AirportRepository {
         Integer id = flight.getFlightId();
         flightDb.put(id, flight);
     }
+
+    public String getAirportNameFromFlightId(Integer flightId){
+        if(!flightDb.containsKey(flightId)){
+            return null;
+        }
+        else{
+            City city = flightDb.get(flightId).getFromCity();
+            return String.valueOf(city);
+        }
+    }
+
     public void addPassenger(Passenger passenger){
         Integer id = passenger.getPassengerId();
         passengerDb.put(id, passenger);

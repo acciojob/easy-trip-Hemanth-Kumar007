@@ -50,6 +50,10 @@ public class AirportService {
         repositoryObj.addFlight(flight);
     }
 
+    public String getAirportNameFromFlightId(Integer flightId){
+        return repositoryObj.getAirportNameFromFlightId(flightId);
+    }
+
     public void addPassenger(Passenger passenger){
         repositoryObj.addPassenger(passenger);
     }
