@@ -63,14 +63,16 @@ public class AirportRepository {
 
     public int getNumberOfPeopleOn(Date date, String airportName){
         Integer totalPersons = 0;
-        for(Integer id : flightDb.keySet()){
-            City from = flightDb.get(id).getFromCity();
-            City to = flightDb.get(id).getToCity();
-            Date fDate = flightDb.get(id).getFlightDate();
+        if(airportDb.containsKey(airportName)) {
             City airportCity = airportDb.get(airportName).getCity();
-            if(fDate.equals(date) && ((from.equals(airportCity)) || (to.equals(airportCity)))){
-                //totalPersons += flightDb.get(id).getMaxCapacity();
-                totalPersons += bookingDb.getOrDefault(id, new ArrayList<>()).size();
+            for (Integer id : flightDb.keySet()) {
+                City from = flightDb.get(id).getFromCity();
+                City to = flightDb.get(id).getToCity();
+                Date fDate = flightDb.get(id).getFlightDate();
+                if (fDate.equals(date) && ((from.equals(airportCity)) || (to.equals(airportCity)))) {
+                    //totalPersons += flightDb.get(id).getMaxCapacity();
+                    totalPersons += bookingDb.getOrDefault(id, new ArrayList<>()).size();
+                }
             }
         }
         return totalPersons;
