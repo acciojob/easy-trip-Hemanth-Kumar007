@@ -84,7 +84,7 @@ public class AirportController {
         //Also if the passenger has already booked a flight then also return "FAILURE".
         //else if you are able to book a ticket then return "SUCCESS"
 
-        return null;
+        return serviceObj.bookATicket(flightId, passengerId);
     }
 
     @PutMapping("/cancel-a-ticket")
@@ -95,7 +95,7 @@ public class AirportController {
         // Otherwise return a "SUCCESS" message
         // and also cancel the ticket that passenger had booked earlier on the given flightId
 
-       return null;
+       return serviceObj.cancelATicket(flightId, passengerId);
     }
 
 
@@ -103,14 +103,15 @@ public class AirportController {
     public int countOfBookingsDoneByPassengerAllCombined(@PathVariable("passengerId")Integer passengerId){
 
         //Tell the count of flight bookings done by a passenger: This will tell the total count of flight bookings done by a passenger :
-       return 0;
+        return serviceObj.countOfBookingsDoneByPassengerAllCombined(passengerId);
     }
 
     @PostMapping("/add-flight")
     public String addFlight(@RequestBody Flight flight){
 
         //Return a "SUCCESS" message string after adding a flight.
-       return null;
+        serviceObj.addFlight(flight);
+       return "SUCCESS";
     }
 
 
@@ -142,7 +143,8 @@ public class AirportController {
         //Add a passenger to the database
         //And return a "SUCCESS" message if the passenger has been added successfully.
 
-       return null;
+        serviceObj.addPassenger(passenger);
+       return "SUCCESS";
     }
 
 
