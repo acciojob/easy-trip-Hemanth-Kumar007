@@ -98,17 +98,16 @@ public class AirportRepository {
 
         Flight flight = flightDb.get(flightId);
         List<Integer> passengerList = bookingDb.getOrDefault(flightId, new ArrayList<>());
-        if(bookingDb.get(flightId).size() >= flight.getMaxCapacity()){
-            return "FAILURE";
+        if(passengerList.size() < flight.getMaxCapacity()) {
+            if (passengerList.contains(passengerId)) {
+                return "FAILURE";
+            } else {
+                passengerList.add(passengerId);
+                bookingDb.put(flightId, passengerList);
+                return "SUCCESS";
+            }
         }
-        else if(bookingDb.get(flightId).contains(passengerId)){
-            return "FAILURE";
-        }
-        else{
-            passengerList.add(passengerId);
-            bookingDb.put(flightId, passengerList);
-            return "SUCCESS";
-        }
+        return "FAILURE";
     }
 
     public String cancelATicket(Integer flightId, Integer passengerId){
@@ -117,20 +116,19 @@ public class AirportRepository {
         // Otherwise return a "SUCCESS" message
         // and also cancel the ticket that passenger had booked earlier on the given flightId
 
-        if(!flightDb.containsKey(flightId)){
-            return "FAILURE";
+        if(flightDb.containsKey(flightId)) {
+            //Flight flight = flightDb.get(flightId);
+            List<Integer> passengerList = bookingDb.get(flightId);
+            if (!passengerList.contains(passengerId)) {
+                return "FAILURE";
+            } else {
+                passengerList.remove(passengerId);
+                bookingDb.put(flightId, passengerList);
+                canceltikets.put(flightId, canceltikets.getOrDefault(flightId, 0) + 1);
+                return "SUCCESS";
+            }
         }
-        //Flight flight = flightDb.get(flightId);
-        List<Integer> passengerList = bookingDb.get(flightId);
-        if(!passengerList.contains(passengerId)){
-            return "FAILURE";
-        }
-        else{
-            passengerList.remove(passengerId);
-            bookingDb.put(flightId, passengerList);
-            canceltikets.put(flightId,canceltikets.getOrDefault(flightId,0)+1);
-            return "SUCCESS";
-        }
+        return "FAILURE";
     }
 
     public int countOfBookingsDoneByPassengerAllCombined(Integer passengerId){
