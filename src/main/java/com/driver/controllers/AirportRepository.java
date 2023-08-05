@@ -67,7 +67,7 @@ public class AirportRepository {
             City from = flightDb.get(id).getFromCity();
             City to = flightDb.get(id).getToCity();
             Date fDate = flightDb.get(id).getFlightDate();
-            String airportCity = airportDb.get(airportName).getCity();
+            City airportCity = airportDb.get(airportName).getCity();
             if(fDate.equals(date) && ((from.equals(airportCity)) || (to.equals(airportCity)))){
                 //totalPersons += flightDb.get(id).getMaxCapacity();
                 totalPersons += bookingDb.getOrDefault(id, new ArrayList<>()).size();
