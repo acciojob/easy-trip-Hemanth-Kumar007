@@ -68,7 +68,7 @@ public class AirportRepository {
             Date fDate = flightDb.get(id).getFlightDate();
             if((fDate.equals(date) && from.equals(airportName)) || ((fDate.equals(date)) && to.equals(airportName))){
                 //totalPersons += flightDb.get(id).getMaxCapacity();
-                totalPersons += bookingDb.get(id).size();
+                totalPersons += bookingDb.getOrDefault(id, new ArrayList<>()).size();
             }
         }
         return totalPersons;
@@ -81,8 +81,11 @@ public class AirportRepository {
         //Suppose if 2 people have booked the flight already : the price of flight for the third person will be 3000 + 2*50 = 3100
         //This will not include the current person who is trying to book, he might also be just checking price
 
-        int alreadyBooked = bookingDb.get(flightId).size();
-        int fare = 3000+alreadyBooked*50;
+        int fare = 0;
+        if(bookingDb.containsKey(flightId)) {
+            int alreadyBooked = bookingDb.get(flightId).size();
+            fare = 3000 + alreadyBooked * 50;
+        }
         return fare;
     }
 
