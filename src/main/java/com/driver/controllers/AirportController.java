@@ -21,7 +21,7 @@ public class AirportController {
     //@Autowired
     AirportService serviceObj = new AirportService();
 
-    @PostMapping("/add_airport")
+    @PostMapping("/add-airport")
     public String addAirport(@RequestBody Airport airport){
 
         //Simply add airport details to your database
@@ -71,7 +71,7 @@ public class AirportController {
         //Suppose if 2 people have booked the flight already : the price of flight for the third person will be 3000 + 2*50 = 3100
         //This will not include the current person who is trying to book, he might also be just checking price
 
-       return 0;
+       return serviceObj.calculateFlightFare(flightId);
 
     }
 

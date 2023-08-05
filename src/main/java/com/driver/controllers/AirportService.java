@@ -30,6 +30,10 @@ public class AirportService {
         return repositoryObj.getNumberOfPeopleOn(date, airportName);
     }
 
+    public int calculateFlightFare(Integer flightId){
+        return repositoryObj.calculateFlightFare(flightId);
+    }
+
     public String bookATicket(Integer flightId, Integer passengerId){
         return repositoryObj.bookATicket(flightId, passengerId);
     }

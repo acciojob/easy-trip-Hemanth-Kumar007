@@ -63,6 +63,18 @@ public class AirportRepository {
         return totalPersons;
     }
 
+    public int calculateFlightFare(Integer flightId){
+
+        //Calculation of flight prices is a function of number of people who have booked the flight already.
+        //Price for any flight will be : 3000 + noOfPeopleWhoHaveAlreadyBooked*50
+        //Suppose if 2 people have booked the flight already : the price of flight for the third person will be 3000 + 2*50 = 3100
+        //This will not include the current person who is trying to book, he might also be just checking price
+
+        int alreadyBooked = bookingDb.get(flightId).size();
+        int fare = 3000+alreadyBooked*50;
+        return fare;
+    }
+
     public String bookATicket(Integer flightId, Integer passengerId){
         //If the numberOfPassengers who have booked the flight is greater than : maxCapacity, in that case :
         //return a String "FAILURE"
