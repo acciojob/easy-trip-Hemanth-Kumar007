@@ -6,6 +6,7 @@ import com.driver.model.Flight;
 import com.driver.model.Passenger;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -92,6 +93,7 @@ public class AirportRepository {
         //else if you are able to book a ticket then return "SUCCESS"
 
         Flight flight = flightDb.get(flightId);
+        List<Integer> passengerList = bookingDb.getOrDefault(flightId, new ArrayList<>());
         if(bookingDb.get(flightId).size() >= flight.getMaxCapacity()){
             return "FAILURE";
         }
@@ -99,7 +101,8 @@ public class AirportRepository {
             return "FAILURE";
         }
         else{
-            bookingDb.get(flightId).add(passengerId);
+            passengerList.add(passengerId);
+            bookingDb.put(flightId, passengerList);
             return "SUCCESS";
         }
     }
@@ -113,12 +116,14 @@ public class AirportRepository {
         if(!flightDb.containsKey(flightId)){
             return "FAILURE";
         }
-        Flight flight = flightDb.get(flightId);
-        if(!bookingDb.get(flightId).contains(passengerId)){
+        //Flight flight = flightDb.get(flightId);
+        List<Integer> passengerList = bookingDb.get(flightId);
+        if(!passengerList.contains(passengerId)){
             return "FAILURE";
         }
         else{
-            bookingDb.get(flightId).remove(passengerId);
+            passengerList.remove(passengerId);
+            bookingDb.put(flightId, passengerList);
             return "SUCCESS";
         }
     }
@@ -144,7 +149,12 @@ public class AirportRepository {
         }
         else{
             City city = flightDb.get(flightId).getFromCity();
-            return String.valueOf(city);
+            for(Airport airport : airportDb.values()){
+                if(airport.getCity().equals(city)){
+                    return airport.getAirportName();
+                }
+            }
+            return null;
         }
     }
 
